@@ -65,13 +65,17 @@ Plugin.prototype.apply = function(compiler) {
       stats.compilation.chunks.map(function(chunk){
         var files = chunk.files.map(function(file){
           var F = {name: file};
-          var publicPath = self.options.publicPath || compiler.options.output.publicPath;
-          if (publicPath) {
-            F.publicPath = publicPath + file;
+          var prodPublicPath = self.options.prodPublicPath || compiler.options.output.prodPublicPath;
+          if (prodPublicPath) {
+            F.prodPublicPath = prodPublicPath + file;
           }
-          if (compiler.options.output.path) {
-            F.path = path.join(compiler.options.output.path, file);
+          var devPublicPath = self.options.devPublicPath || compiler.options.output.devPublicPath;
+          if (devPublicPath) {
+            F.devPublicPath = devPublicPath + file;
           }
+          // if (compiler.options.output.path) {
+          //   F.path = path.join(compiler.options.output.path, file);
+          // }
           return F;
         });
         chunks[chunk.name] = files;
@@ -88,13 +92,17 @@ Plugin.prototype.apply = function(compiler) {
         entrypointsChunks = value.chunks.map(function(chunk) {
           var files = chunk.files.map(function(file){
             var F = {name: file};
-            var publicPath = self.options.publicPath || compiler.options.output.publicPath;
-            if (publicPath) {
-              F.publicPath = publicPath + file;
+            var prodPublicPath = self.options.prodPublicPath || compiler.options.output.prodPublicPath;
+            if (prodPublicPath) {
+              F.prodPublicPath = prodPublicPath + file;
             }
-            if (compiler.options.output.path) {
-              F.path = path.join(compiler.options.output.path, file);
+            var devPublicPath = self.options.devPublicPath || compiler.options.output.devPublicPath;
+            if (devPublicPath) {
+              F.devPublicPath = devPublicPath + file;
             }
+            // if (compiler.options.output.path) {
+            //   F.path = path.join(compiler.options.output.path, file);
+            // }
             return F; 
             });
           return files;
